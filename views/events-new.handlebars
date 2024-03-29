@@ -1,26 +1,5 @@
 <!-- views/events-new.handlebars -->
 
 <form method='POST' action='/events'>
-  <fieldset>
-    <legend>New Event</legend>
-    <!-- TITLE -->
-    <p>
-      <label for='title'>Title</label><br />
-      <input type='text' name='title' />
-    </p>
-    <p>
-      <label for='description'>Event Description</label><br />
-      <input type='text' name='description' />
-    </p>
-    <p>
-      <label for='imgUrl'>Image URL</label><br />
-      <input type='text' name='imgUrl' />
-    </p>
-  </fieldset>
-
-  <!-- BUTTON -->
-  <p>
-    <button type='submit'>Save Event</button>
-  </p>
-
+  {{> events-form legendText="New Event" buttonText="Save Event"}}
 </form>
