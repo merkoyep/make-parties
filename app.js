@@ -33,7 +33,7 @@ app.set('view engine', 'handlebars');
 // Routes
 
 // INDEX
-require('./controllers/events')(app, models);
+require('./controllers/events')(app, prisma);
 
 // EVENTS
 
