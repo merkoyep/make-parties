@@ -1,3 +1,6 @@
 <form method='POST' action='/events/{{event.id}}?_method=PUT'>
   {{> events-form legendText="Edit Event" buttonText="Update Event" event=event}}
 </form>
+<form action="/events/{{event.id}}?_method=DELETE" method="POST">
+  <button type="submit" class='btn btn-danger'>Delete</button>
+</form>
