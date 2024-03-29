@@ -35,18 +35,35 @@ app.get('/', async (req, res) => {
 });
 
 // EVENTS
-app.get('/events/new', (req, res) => {
-  res.render('events-new', {});
-});
-
 app.get('/events', async (req, res) => {
   const events = await prisma.event.findMany();
   console.log(events);
   res.render('events-index', { events: events });
 });
 
+app.get('/events/new', (req, res) => {
+  res.render('events-new', {});
+});
+
+app.get('/events/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await prisma.event.findUnique({
+      where: { id: parseInt(id, 10) },
+    });
+
+    if (event) {
+      res.render('events-show', { event });
+    } else {
+      res.status(404).send('Event not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
 app.post('/events', async (req, res) => {
-  console.log(req.body);
   const { title, description, imgUrl } = req.body;
   const result = await prisma.event.create({
     data: {
@@ -55,7 +72,7 @@ app.post('/events', async (req, res) => {
       imgUrl,
     },
   });
-  res.json(result);
+  res.redirect('/events');
 });
 
 // port
