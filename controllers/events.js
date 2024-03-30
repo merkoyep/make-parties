@@ -1,4 +1,4 @@
-module.exports = function (app, models) {
+module.exports = function (app, prisma) {
   app.get('/', async (req, res) => {
     const events = await prisma.event.findMany();
     res.render('events-index', { events: events });
