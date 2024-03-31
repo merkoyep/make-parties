@@ -33,9 +33,10 @@ app.set('view engine', 'handlebars');
 // Routes
 
 // INDEX
-require('./controllers/events')(app, prisma);
 
 // EVENTS
+require('./controllers/events')(app, prisma);
+require('./controllers/rsvps')(app, prisma);
 
 // port
 const port = process.env.PORT || 3000;

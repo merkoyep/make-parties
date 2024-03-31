@@ -17,6 +17,7 @@ module.exports = function (app, prisma) {
     try {
       const event = await prisma.event.findUnique({
         where: { id: parseInt(id, 10) },
+        include: { rsvps: true },
       });
 
       if (event) {

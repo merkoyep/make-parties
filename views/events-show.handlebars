@@ -10,5 +10,29 @@
     <div class='text-right'>
       <a href='/events/{{event.id}}/edit'>Edit</a>
     </div>
+    <div class='col-lg-4'>
+      <a
+        href='/events/{{event.id}}/rsvps/new'
+        class='btn btn-primary btn-sm'
+      >RSVP</a>
+    </div>
+
+    <div class='col-lg-4 offset-lg-1'>
+      <div class='d-flex justify-content-between'>
+        <b>RSVPs ({{event.rsvps.length}})</b>
+        <a
+          href='/events/{{event.id}}/rsvps/new'
+          class='btn btn-primary btn-sm'
+        >RSVP</a>
+      </div>
+
+      <div class='list-group mt-4'>
+        {{#each event.rsvps}}
+          <div class='list-group-item'>
+            {{this.name}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
   </div>
 </div>
