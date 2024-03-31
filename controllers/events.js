@@ -20,10 +20,16 @@ module.exports = function (app, prisma) {
       const event = await prisma.event.findUnique({
         where: { id: parseInt(id, 10) },
         select: {
-          rsvps: true,
           id: true,
           title: true,
           createdAt: true,
+          rsvps: {
+            select: {
+              id: true,
+              name: true,
+              // Specify other Rsvp fields you need
+            },
+          },
         },
       });
 
