@@ -20,26 +20,26 @@ module.exports = function (app, prisma) {
       const event = await prisma.event.findUnique({
         where: { id: parseInt(id, 10) },
         include: {
-          rsvps: true, // Correctly include the 'rsvps' relation
+          rsvps: true, // Include the RSVPs
         },
       });
 
       if (event) {
-        // Assuming 'createdAt' is correctly a Date object
+        // Format the createdAt date; assuming it's already a JavaScript Date object
         const createdAtFormatted = format(
           event.createdAt,
           'MMMM do, yyyy h:mm:ss a'
         );
 
-        // Since we cannot directly modify the 'event' object returned by Prisma,
-        // create a new object for rendering that includes the formatted date.
-        const eventForRendering = {
+        // Prepare the event data for rendering, including the formatted createdAt date
+        const eventDataForRendering = {
           ...event,
-          createdAtFormatted: createdAtFormatted,
-          rsvps: event.rsvps, // Directly pass the included 'rsvps'
+          createdAtFormatted, // Add the formatted createdAt string
+          rsvps: event.rsvps, // Directly pass the included rsvps
         };
 
-        res.render('events-show', { event: eventForRendering });
+        // Render the template with the prepared event data
+        res.render('events-show', { event: eventDataForRendering });
       } else {
         res.status(404).send('Event not found');
       }
