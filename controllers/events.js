@@ -1,3 +1,5 @@
+const { format } = require('date-fns');
+
 module.exports = function (app, prisma) {
   app.get('/', async (req, res) => {
     const events = await prisma.event.findMany();
@@ -21,6 +23,11 @@ module.exports = function (app, prisma) {
       });
 
       if (event) {
+        const createdAt = new Date(event.createdAt * 1000); // Convert to milliseconds
+        const createdAtFormatted = format(createdAt, 'MMMM do, yyyy h:mm:ss a');
+
+        // Adding formatted date to the event object or directly passing to the view
+        event.createdAtFormatted = createdAtFormatted;
         res.render('events-show', { event });
       } else {
         res.status(404).send('Event not found');
