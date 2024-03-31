@@ -21,4 +21,17 @@ module.exports = function (app, prisma) {
     });
     res.redirect(`/events/${eventId}`);
   });
+
+  app.delete('/events/:eventId/rsvps/:id', async (req, res) => {
+    const { id, eventId } = req.params;
+    try {
+      await prisma.rsvp.delete({
+        where: { id: parseInt(id, 10) },
+      });
+      res.redirect(`/events/${eventId}`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
 };
