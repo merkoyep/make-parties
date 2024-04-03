@@ -16,6 +16,8 @@ model Event {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   rsvps   Rsvp[]
+  userId Int
+  user   User     @relation(fields: [userId], references: [id])
 }
 
 model Rsvp {
@@ -24,4 +26,11 @@ model Rsvp {
   email      String   @db.VarChar(255)
   eventId    Int      
   event      Event    @relation(fields: [eventId], references: [id])
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  events    Event[]
 }

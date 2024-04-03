@@ -69,14 +69,29 @@ module.exports = function (app, prisma) {
 
   app.post('/events', async (req, res) => {
     const { title, description, imgUrl } = req.body;
-    const result = await prisma.event.create({
-      data: {
-        title,
-        description,
-        imgUrl,
-      },
-    });
-    res.redirect('/events');
+    // Assuming the user's ID is stored in req.session.userId
+    // You need to replace this with whatever mechanism you use to store the authenticated user's ID
+    const userId = res.locals.currentUser.id; // For example purposes
+
+    if (!userId) {
+      // Handle the case where the user is not logged in or the user ID is not available
+      return res.status(403).send('User must be logged in to create an event.');
+    }
+
+    try {
+      const result = await prisma.event.create({
+        data: {
+          title,
+          description,
+          imgUrl,
+          userId, // Include the userId in the event creation
+        },
+      });
+      res.redirect('/events');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
   });
 
   app.put('/events/:id', async (req, res) => {
